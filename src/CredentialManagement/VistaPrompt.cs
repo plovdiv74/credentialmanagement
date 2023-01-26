@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CredentialManagement
 {
-    public class VistaPrompt: BaseCredentialsPrompt
+    public class VistaPrompt : BaseCredentialsPrompt
     {
         string _domain;
 
@@ -106,9 +106,9 @@ namespace CredentialManagement
             {
                 dialogResult = NativeMethods.CredUIPromptForWindowsCredentials(ref credUI, ErrorCode, ref authPackage,
                                                                                     inCredBuffer,
-                    //You can force that a specific username is shown in the dialog. Create it with 'CredPackAuthenticationBuffer()'. Then, the buffer goes here...
+                                                                                    //You can force that a specific username is shown in the dialog. Create it with 'CredPackAuthenticationBuffer()'. Then, the buffer goes here...
                                                                                     (uint)inCredBufferSize,
-                    //...and the size goes here. You also have to add CREDUIWIN_IN_CRED_ONLY to the flags (last argument).
+                                                                                    //...and the size goes here. You also have to add CREDUIWIN_IN_CRED_ONLY to the flags (last argument).
                                                                                     out outCredBuffer,
                                                                                     out outCredSize,
                                                                                     ref persist,
@@ -124,16 +124,18 @@ namespace CredentialManagement
             }
             switch (dialogResult)
             {
-                case NativeMethods.CredUIReturnCodes.ERROR_CANCELLED:
-                    return DialogResult.Cancel;
-                case NativeMethods.CredUIReturnCodes.ERROR_NO_SUCH_LOGON_SESSION:
-                case NativeMethods.CredUIReturnCodes.ERROR_NOT_FOUND:
-                case NativeMethods.CredUIReturnCodes.ERROR_INVALID_ACCOUNT_NAME:
-                case NativeMethods.CredUIReturnCodes.ERROR_INSUFFICIENT_BUFFER:
-                case NativeMethods.CredUIReturnCodes.ERROR_INVALID_PARAMETER:
-                case NativeMethods.CredUIReturnCodes.ERROR_INVALID_FLAGS:
-                case NativeMethods.CredUIReturnCodes.ERROR_BAD_ARGUMENTS:
-                    throw new InvalidOperationException("Invalid properties were specified.", new Win32Exception(Marshal.GetLastWin32Error()));
+            case NativeMethods.CredUIReturnCodes.ERROR_CANCELLED:
+                return DialogResult.Cancel;
+            case NativeMethods.CredUIReturnCodes.ERROR_NO_SUCH_LOGON_SESSION:
+            case NativeMethods.CredUIReturnCodes.ERROR_NOT_FOUND:
+            case NativeMethods.CredUIReturnCodes.ERROR_INVALID_ACCOUNT_NAME:
+            case NativeMethods.CredUIReturnCodes.ERROR_INSUFFICIENT_BUFFER:
+            case NativeMethods.CredUIReturnCodes.ERROR_INVALID_PARAMETER:
+            case NativeMethods.CredUIReturnCodes.ERROR_INVALID_FLAGS:
+            case NativeMethods.CredUIReturnCodes.ERROR_BAD_ARGUMENTS:
+                throw new InvalidOperationException("Invalid properties were specified.", new Win32Exception(Marshal.GetLastWin32Error()));
+            default:
+                break;
             }
 
             int maxUsername = 1000;

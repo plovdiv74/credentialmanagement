@@ -265,16 +265,18 @@ namespace CredentialManagement
                                                                                   ref persist, DialogFlags);
             switch (result)
             {
-                case NativeMethods.CredUIReturnCodes.ERROR_CANCELLED:
-                    return DialogResult.Cancel;
-                case NativeMethods.CredUIReturnCodes.ERROR_NO_SUCH_LOGON_SESSION:
-                case NativeMethods.CredUIReturnCodes.ERROR_NOT_FOUND:
-                case NativeMethods.CredUIReturnCodes.ERROR_INVALID_ACCOUNT_NAME:
-                case NativeMethods.CredUIReturnCodes.ERROR_INSUFFICIENT_BUFFER:
-                case NativeMethods.CredUIReturnCodes.ERROR_INVALID_PARAMETER:
-                case NativeMethods.CredUIReturnCodes.ERROR_INVALID_FLAGS:
-                case NativeMethods.CredUIReturnCodes.ERROR_BAD_ARGUMENTS:
-                    throw new InvalidOperationException("Invalid properties were specified.", new Win32Exception(Marshal.GetLastWin32Error()));
+            case NativeMethods.CredUIReturnCodes.ERROR_CANCELLED:
+                return DialogResult.Cancel;
+            case NativeMethods.CredUIReturnCodes.ERROR_NO_SUCH_LOGON_SESSION:
+            case NativeMethods.CredUIReturnCodes.ERROR_NOT_FOUND:
+            case NativeMethods.CredUIReturnCodes.ERROR_INVALID_ACCOUNT_NAME:
+            case NativeMethods.CredUIReturnCodes.ERROR_INSUFFICIENT_BUFFER:
+            case NativeMethods.CredUIReturnCodes.ERROR_INVALID_PARAMETER:
+            case NativeMethods.CredUIReturnCodes.ERROR_INVALID_FLAGS:
+            case NativeMethods.CredUIReturnCodes.ERROR_BAD_ARGUMENTS:
+                throw new InvalidOperationException("Invalid properties were specified.", new Win32Exception(Marshal.GetLastWin32Error()));
+            default:
+                break;
             }
 
             Username = usernameBuffer.ToString();

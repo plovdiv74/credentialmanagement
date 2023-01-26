@@ -250,7 +250,7 @@ namespace CredentialManagement
                 throw new InvalidOperationException("Target must be specified to delete a credential.");
             }
 
-            StringBuilder target = string.IsNullOrEmpty(Target) ? new StringBuilder() : new StringBuilder(Target);
+            StringBuilder target = new StringBuilder(Target);
             bool result = NativeMethods.CredDelete(target, Type, 0);
             return result;
         }
